@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head(#{menu.list})"/>
+<body>
+	<div th:replace="fragments/layout :: header"/>
+	<div th:replace="fragments/layout :: menu-sidebar"/>
+	<div class="container">
+		    <h1>list sample page</h1>
+  
+			<table>
+			<tr>
+				<th>ID</th>
+				<th>NAME</th>
+				<th>COUNTRY</th>
+				<th>STATE</th>
+				<th>MAP</th>
+			</tr>
+			<tr th:each="city : ${cities}">
+				<td th:text="${city.id}">id</td>
+				<td>
+					<span th:if="${#lists.isEmpty(city.map)}" th:text="${city.name}"/>					
+					<span th:if="${not #lists.isEmpty(city.map)}">
+						<a href="detail.html" th:href="@{/detail(cityId=${city.id})}" th:text="${city.name}"/>
+					</span>
+		 		</td>
+				<td th:text="${city.country}">egypt</td>
+				<td th:text="${city.state}">none</td>
+				<td th:text="${city.map}">156.3239,321.4245</td>
+			</tr>
+			<tr>
+				<td colspan="5">
+					<form action="/list.html" th:action="@{/list}">
+					<fieldset>
+						<input name="name" th:value="${param.name}" />
+						<input name="country" th:value="${param.country}" />
+						<input type="submit" value="search!" th:attr="value=#{btn.search}"/>
+					</fieldset>
+					</form>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="5">
+					<div th:text="'pagination here..'">
+						<!--/*
+						<option th:each="i : ${#numbers.sequence(0, 23)}" th:value="${i}" th:text="${i}" th:selected="${ i==9 } ">Options</option>
+						*/-->
+					</div>
+					<div th:text="'search keyword : name=' + ${param.name} + ', country=' + ${param.country}"></div>
+					<div th:text="'pageNumber : ' + ${cities.pageable.pageNumber}"></div>
+					<div th:text="'pageSize : ' + ${cities.pageable.pageSize}"></div>
+					<div th:text="'sort : ' + ${cities.pageable.sort}"></div>
+				</td>
+			</tr>
+			</table>
+	</div>
+	<div th:replace="fragments/layout :: footer"/>
+</body>
+</html>

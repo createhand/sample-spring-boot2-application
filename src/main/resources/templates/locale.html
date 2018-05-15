@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head(#{menu.locale})"/>
+<body>
+	<div th:replace="fragments/layout :: header"/>
+	<div th:replace="fragments/layout :: menu-sidebar"/>
+	<div class="container">
+		<h1>Locale</h1>
+		<div class="starter-template">
+			<h1><span th:text="#{opt.lang.change}"/></h1>
+			<h2>
+			<select id="locales">
+				<option value="">select</option>
+				<option th:value="en" th:text="#{opt.lang.en}" th:selected="${lang == 'en'}"></option>
+				<option th:value="ko" th:text="#{opt.lang.ko}" th:selected="${lang == 'ko'}"></option>
+			</select>
+			</h2>
+		</div>
+	</div>
+	<!-- /.container -->
+	<script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$("#locales").change(function () {
+			var selectedOption = $('#locales').val();
+			if (selectedOption != ''){
+				window.location.replace('locale?lang=' + selectedOption);
+			}
+		});
+	});
+	</script>	
+
+
+
+
+	<div th:replace="fragments/layout :: footer"/>
+</body>
+</html>

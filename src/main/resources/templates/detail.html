@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head(#{menu.detail})"/>
+<body>
+	<div th:replace="fragments/layout :: header"/>
+	<div th:replace="fragments/layout :: menu-sidebar"/>
+	<div class="container">
+		<h1>Detail & Update form</h1>
+		<form action="/saveCity.html" method="POST" th:action="@{/saveCity}">
+		<fieldset>
+			<input type="hidden" name="id" th:value="${city.id}" />
+			country:<input name="country" th:value="${city.country}" /><br/>
+			map:<input name="map" th:value="${city.map}" /><br/>
+			name:<input name="name" th:value="${city.name}" /><br/>
+			state:<input name="state" th:value="${city.state}" /><br/>
+			<input type="submit" value="save!" th:attr="value=#{btn.save}"/>
+		</fieldset>
+		</form>		
+	</div>
+	<div th:replace="fragments/layout :: footer"/>
+</body>
+</html>

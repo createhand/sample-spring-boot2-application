@@ -1,0 +1,12 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head(#{menu.home})"/>
+<body>
+	<div th:replace="fragments/layout :: header"/>
+	<div th:replace="fragments/layout :: menu-sidebar"/>
+	<div class="container">
+		<h1>Spring Boot Web Thymeleaf Example Application</h1>
+	</div>
+	<div th:replace="fragments/layout :: footer"/>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head(#{menu.save})"/>
+<body>
+	<div th:replace="fragments/layout :: header"/>
+	<div th:replace="fragments/layout :: menu-sidebar"/>
+	<div class="container">
+		<h1>Save form</h1>
+		<form action="/saveCity.html" method="POST" th:action="@{/saveCity}">
+		<fieldset>
+			country:<input name="country" /><br/>
+			map:<input name="map" /><br/>
+			name:<input name="name" /><br/>
+			state:<input name="state" /><br/>
+			<input type="submit" value="save!" th:attr="value=#{btn.save}"/>
+		</fieldset>
+		</form>		
+	</div>
+	<div th:replace="fragments/layout :: footer"/>
+</body>
+</html>

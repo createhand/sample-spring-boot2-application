@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head(#{menu.mypage})"/>
+<body>
+	<div th:replace="fragments/layout :: header"/>
+	<div th:replace="fragments/layout :: menu-sidebar"/>
+	<div class="container">
+		<h1>mypage</h1>
+		<div class="row">
+			<a href="/logout"><b>logout</b></a><br/><br/>
+			<b>session userinfo : </b><br/><span th:text="${session.SPRING_SECURITY_CONTEXT.authentication.principal}"></span><br/>
+			username : <span th:text="${session.SPRING_SECURITY_CONTEXT.authentication.principal.username}"></span><br/>
+			<br/><br/><br/><br/><br/>
+			<b>session object : </b><br/><span th:text="${session}"></span><br/><br/>
+			<b>session authentication info : </b><br/><span th:text="${session.SPRING_SECURITY_CONTEXT.authentication}"></span><br/><br/>
+			<b>session authenticated : </b><br/><span th:text="${session.SPRING_SECURITY_CONTEXT.authentication.authenticated}"></span><br/><br/>
+			<b>session authentication details : </b><br/><span th:text="${session.SPRING_SECURITY_CONTEXT.authentication.details}"></span><br/><br/>
+			<b>session id : </b><br/><span th:text="${session.SPRING_SECURITY_CONTEXT.authentication.details.sessionId}"></span><br/><br/>
+			<span th:text="${#session.id}"></span><br/><br/>
+			<b>set authorities by CustomLoginSuccessHandler : </b><br/><span th:text="${session.authorities[0]}"></span><br/><br/>
+			<b>session authentication.principal : </b><br/><span th:text="${session.SPRING_SECURITY_CONTEXT.authentication.principal}"></span><br/><br/>
+			<b>session authentication.principal.authorities : </b><br/><span th:text="${session.SPRING_SECURITY_CONTEXT.authentication.principal.authorities}"></span><br/><br/>
+		</div>		
+	</div>
+	<div th:replace="fragments/layout :: footer"/>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head(#{menu.login})"/>
+<body>
+	<div th:replace="fragments/layout :: header"/>
+	<div th:replace="fragments/layout :: menu-sidebar"/>
+	<div class="container">
+		<h1>Login</h1>
+			<span th:text="${#request.getParameter('error') == null ? '' : 'not valid'}"></span><br/>
+			<span th:text="${#session.id}"></span><br/><br/>
+			<form class="login-form" method="POST">
+			<input type ="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/> 
+			<div class="row">
+				<div class="input-field col s12">
+				<input th:name="username" class="validate" value="scpark" />
+				<label for="user ID">user ID</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s12">
+				<input id="password" type="password" name="password" class="validate" value="123" />
+				<label for="password">Password</label>
+				</div>
+			</div>
+			<input class="login-btn waves-effect waves-light btn" type="submit" th:value="#{btn.login}"/>
+			</form>
+	</div>
+	<div th:replace="fragments/layout :: footer"/>
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title th:text="${title}"/>
+
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- css -->
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../css/main.css" />
+
+    <!-- js -->
+    <script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    
+    <!-- Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+</head>
+<body>
+<header>This is header</header>
+<div class="wrapper">
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar" th:fragment="menu-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar" id="leftMenu">
+            <!-- Sidebar Menu -->
+            <ol>
+                <li><a href="/home.html" th:href="@{/home}"><span th:text="#{menu.home}"/></a></li>
+                <li><a href="/list.html" th:href="@{/list}"><span th:text="#{menu.list}"/></a></li>
+                <li><a href="/save.html" th:href="@{/save}"><span th:text="#{menu.save}"/></a></li>
+                <li><a href="/signup.html" th:href="@{/signup}"><span th:text="#{menu.signup}"/></a></li>
+                <li><a href="/login.html" th:href="@{/login}"><span th:text="#{menu.login}"/></a></li>
+                <li><a href="/mypage.html" th:href="@{/mypage}"><span th:text="#{menu.mypage}"/></a></li>
+                <li><a href="/admin.html" th:href="@{/admin}"><span th:text="#{menu.admin}"/></a></li>
+                <li><a href="/locale.html" th:href="@{/locale}"><span th:text="#{menu.locale}"/></a></li>
+                <li><a href="/logout.html" th:href="@{/logout}"><span th:text="#{menu.logout}"/></a></li>
+            </ol>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Main Footer -->
+    <footer class="main-footer" th:fragment="footer">
+        <strong>Copyright &copy; 2017 12CM.</strong> All rights reserved.
+    </footer>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark" th:fragment="control-sidebar">
+        <!-- Create the tabs -->
+        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+            <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+            <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <!-- Home tab content -->
+            <div class="tab-pane active" id="control-sidebar-home-tab">
+                <h3 class="control-sidebar-heading">Recent Activity</h3>
+                <ul class="control-sidebar-menu">
+                    <li>
+                        <a href="javascript:;">
+                            <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading"></h4>
+
+                                <p>Will be 23 on April 24th</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <!-- /.control-sidebar-menu -->
+
+                <h3 class="control-sidebar-heading">Tasks Progress</h3>
+                <ul class="control-sidebar-menu">
+                    <li>
+                        <a href="javascript:;">
+                            <h4 class="control-sidebar-subheading">
+                                Custom Template Design
+                                <span class="pull-right-container">
+                    <span class="label label-danger pull-right">70%</span>
+                  </span>
+                            </h4>
+
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <!-- /.control-sidebar-menu -->
+
+            </div>
+            <!-- /.tab-pane -->
+            <!-- Stats tab content -->
+            <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+            <!-- /.tab-pane -->
+            <!-- Settings tab content -->
+            <div class="tab-pane" id="control-sidebar-settings-tab">
+                <form method="post">
+                    <h3 class="control-sidebar-heading">General Settings</h3>
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Report panel usage
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+
+                        <p>
+                            Some information about this general settings option
+                        </p>
+                    </div>
+                    <!-- /.form-group -->
+                </form>
+            </div>
+            <!-- /.tab-pane -->
+        </div>
+    </aside>
+    
+</div>
+<!-- ./wrapper -->
+<div th:fragment="expire-warning">
+    <div class="modal modal-danger" id="modal-expire">
+        <div class="modal-dialog w-300px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"><i class="fa fa-warning"></i> <span >세션 만료!!</span></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row margin-b-10">
+                        <div class="col-sm-4 text-right" style="font-size: 30px;color: #f13226;">
+                            <i class="fa fa-warning"></i>
+                        </div>
+                        <div class="col-sm-8">
+                            <span >접근 권한이 없습니다.<br/>
+                            로그인 해주세요.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" id="expire_login_bt" >로그인</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    <div class="modal modal-warning show-alert" id="modal-warning" >
+        <div class="modal-dialog w-400px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"><i class="fa fa-warning" style="margin-right: 5px;"></i> <span id="warning-title"></span></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row ">
+                        <div class="col-sm-3 text-right" style="font-size: 30px;color: #f1a619;">
+                            <i class="fa fa-warning"></i>
+                        </div>
+                        <div class="col-sm-8" >
+                            <h4 id="warning-msg"></h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline w-100px" id="warning_bt" data-dismiss="show-alert">확인</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    <div class="modal modal-danger confirm" id="modal-confirm" >
+        <div class="modal-dialog w-400px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"><i class="fa fa-warning" style="margin-right: 5px;"></i> <span id="confirm-title"></span></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row ">
+                        <div class="col-sm-3 text-right" style="font-size: 30px;color: #f1280d;">
+                            <i class="fa fa-warning"></i>
+                        </div>
+                        <div class="col-sm-8" >
+                            <h4 id="confirm-msg"></h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer text-center">
+                    <button type="button" class="btn btn-outline w-100px" data-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-outline w-100px" id="confirm_bt" data-dismiss="confirm">확인</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+</div>
+
+</body>
+</html>
