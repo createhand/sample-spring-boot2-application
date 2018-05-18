@@ -7,12 +7,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head th:fragment="head(title)">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title th:text="${title}"/>
+    <title th:text="${title}"></title>
 
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- css -->
-    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../css/main.css" />
+    <link rel="stylesheet" th:href="@{/css/common.css}" href="../../css/common.css" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../../css/bootstrap.min.css" />
 
     <!-- js -->
     <script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
@@ -30,15 +31,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <section class="sidebar" id="leftMenu">
             <!-- Sidebar Menu -->
             <ol>
-                <li><a href="/home.html" th:href="@{/home}"><span th:text="#{menu.home}"/></a></li>
-                <li><a href="/list.html" th:href="@{/list}"><span th:text="#{menu.list}"/></a></li>
-                <li><a href="/save.html" th:href="@{/save}"><span th:text="#{menu.save}"/></a></li>
-                <li><a href="/signup.html" th:href="@{/signup}"><span th:text="#{menu.signup}"/></a></li>
-                <li><a href="/login.html" th:href="@{/login}"><span th:text="#{menu.login}"/></a></li>
-                <li><a href="/mypage.html" th:href="@{/mypage}"><span th:text="#{menu.mypage}"/></a></li>
-                <li><a href="/admin.html" th:href="@{/admin}"><span th:text="#{menu.admin}"/></a></li>
-                <li><a href="/locale.html" th:href="@{/locale}"><span th:text="#{menu.locale}"/></a></li>
-                <li><a href="/logout.html" th:href="@{/logout}"><span th:text="#{menu.logout}"/></a></li>
+                <li><a href="/home.html" th:href="@{/home}"><span th:text="#{menu.home}"></span></a></li>
+                <li><a href="/list.html" th:href="@{/list}"><span th:text="#{menu.list}"></span></a></li>
+                <li><a href="/save.html" th:href="@{/save}"><span th:text="#{menu.save}"></span></a></li>
+                <li><a href="/signup.html" th:href="@{/signup}"><span th:text="#{menu.signup}"></span></a></li>
+                <li><a href="/login.html" th:href="@{/login}"><span th:text="#{menu.login}"></span></a></li>
+                <li><a href="/mypage.html" th:href="@{/mypage}"><span th:text="#{menu.mypage}"></span></a></li>
+                <li><a href="/admin.html" th:href="@{/admin}"><span th:text="#{menu.admin}"></span></a></li>
+                <li><a href="/locale.html" th:href="@{/locale}"><span th:text="#{menu.locale}"></span></a></li>
+                <li><a href="/logout.html" th:href="@{/logout}"><span th:text="#{menu.logout}"></span></a></li>
             </ol>
         </section>
         <!-- /.sidebar -->
@@ -68,7 +69,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                             <div class="menu-info">
                                 <h4 class="control-sidebar-subheading"></h4>
-
                                 <p>Will be 23 on April 24th</p>
                             </div>
                         </a>
