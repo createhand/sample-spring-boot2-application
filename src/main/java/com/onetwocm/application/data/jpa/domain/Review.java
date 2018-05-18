@@ -38,8 +38,8 @@ public class Review implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name = "review_generator", sequenceName = "review_sequence", initialValue = 64)
-	@GeneratedValue(generator = "review_generator")
+//	@SequenceGenerator(name = "review_generator", sequenceName = "review_sequence", initialValue = 64)
+//	@GeneratedValue(generator = "review_generator")
 	private Long id;
 
 	@ManyToOne(optional = false)

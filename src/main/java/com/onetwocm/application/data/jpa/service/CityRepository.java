@@ -19,13 +19,12 @@ package com.onetwocm.application.data.jpa.service;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.Repository;
+import org.springframework.data.repository.CrudRepository;
 
 import com.onetwocm.application.data.jpa.domain.City;
 
 @ComponentScan
-public interface CityRepository extends Repository<City, Long> {
+public interface CityRepository extends CrudRepository<City, Long> {
 	
 	//document
 	//https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.named-queries
@@ -35,12 +34,11 @@ public interface CityRepository extends Repository<City, Long> {
 	 */
 	
 	//insert, update
+	@SuppressWarnings("unchecked")
 	City save(City entity);
 
 	//select
 	Page<City> findAll(Pageable pageable);
-	
-	City findById(Long id);
 	
 	boolean existsById(Long id);
 	

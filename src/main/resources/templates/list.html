@@ -2,11 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/layout :: head(#{menu.list})"/>
 <body>
-	<div th:replace="fragments/layout :: header"/>
-	<div th:replace="fragments/layout :: menu-sidebar"/>
+	<div th:replace="fragments/layout :: header"></div>
+	<div th:replace="fragments/layout :: menu-sidebar"></div>
 	<div class="container">
-		    <h1>list sample page</h1>
-  
+			<h1>list sample page</h1>
 			<table>
 			<tr>
 				<th>ID</th>
@@ -18,9 +17,9 @@
 			<tr th:each="city : ${cities}">
 				<td th:text="${city.id}">id</td>
 				<td>
-					<span th:if="${#lists.isEmpty(city.map)}" th:text="${city.name}"/>					
+					<span th:if="${#lists.isEmpty(city.map)}" th:text="${city.name}"></span>					
 					<span th:if="${not #lists.isEmpty(city.map)}">
-						<a href="detail.html" th:href="@{/detail(cityId=${city.id})}" th:text="${city.name}"/>
+						<a href="detail.html" th:href="@{/detail(cityId=${city.id})}" th:text="${city.name}"></a>
 					</span>
 		 		</td>
 				<td th:text="${city.country}">egypt</td>
@@ -40,15 +39,44 @@
 			</tr>
 			<tr>
 				<td colspan="5">
-					<div th:text="'pagination here..'">
-						<!--/*
-						<option th:each="i : ${#numbers.sequence(0, 23)}" th:value="${i}" th:text="${i}" th:selected="${ i==9 } ">Options</option>
-						*/-->
+
+
+					<div class="row">
+						<div 
+							class="form-group col-md-11 pagination-centered">
+							<ul class="pagination">
+								<li th:class="${cities.isFirst()} ? disabled">
+									<a class="pageLink" th:href="@{/list(page=0)}">&laquo;</a>
+								</li>
+								<li th:class="${!cities.hasPrevious()} ? disabled">
+									<a th:href="${cities.hasPrevious()} ? @{/list(page=${cities.number-1})}">&larr;</a>
+								</li>
+								<li
+									th:class="${cities.number == page} ? 'active pointer-disabled'"
+									th:each="page : ${#numbers.sequence((cities.number/5)*5, ((cities.number/5)*5)+4 >= cities.totalPages ? cities.totalElements/cities.size : ((cities.number/5)*5)+4 )}">
+									<a class="pageLink"
+									th:href="@{/list(page=${page})}"
+									th:text="${page+1}"></a>
+								</li>
+								<li
+									th:class="${!cities.hasNext()} ? disabled">
+									<a class="pageLink"
+									th:href="${cities.hasNext()} ? @{/list(page=${cities.number+1})}">&rarr;</a>
+								</li>
+								<li
+									th:class="${cities.isLast()} ? disabled">
+									<a class="pageLink"
+									th:href="@{/list(page=${cities.totalElements/cities.size})}">&raquo;</a>
+								</li>
+							</ul>
+						</div>
 					</div>
 					<div th:text="'search keyword : name=' + ${param.name} + ', country=' + ${param.country}"></div>
+					<div th:text="'cities number : ' + ${cities.number}"></div>
 					<div th:text="'pageNumber : ' + ${cities.pageable.pageNumber}"></div>
 					<div th:text="'pageSize : ' + ${cities.pageable.pageSize}"></div>
 					<div th:text="'sort : ' + ${cities.pageable.sort}"></div>
+
 				</td>
 			</tr>
 			</table>

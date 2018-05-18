@@ -36,8 +36,8 @@ public class Hotel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name = "hotel_generator", sequenceName = "hotel_sequence", initialValue = 28)
-	@GeneratedValue(generator = "hotel_generator")
+//	@SequenceGenerator(name = "hotel_generator", sequenceName = "hotel_sequence", initialValue = 28)
+//	@GeneratedValue(generator = "hotel_generator")
 	private Long id;
 
 	@ManyToOne(optional = false)

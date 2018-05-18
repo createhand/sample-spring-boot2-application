@@ -16,14 +16,16 @@
 
 package com.onetwocm.application.controller;
 
-import java.net.URI;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -51,6 +53,8 @@ import com.onetwocm.application.data.jpa.service.MemberRepository;
 
 @Controller
 public class SampleWebController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(SampleWebController.class);
 
 	@Autowired 
 	private CityService cityService;
@@ -85,15 +89,44 @@ public class SampleWebController {
 		criteria.setName((String)param.get("name"));
 		criteria.setCountry((String)param.get("country"));
 		Page<City> cities = cityService.findCities(criteria, pageable);
-		
+		logger.info("cities.getNumber() : "+cities.getNumber());
+		logger.info("cities.getNumberOfElements() : "+cities.getNumberOfElements());
+		logger.info("cities.getSize() : "+cities.getSize());
+		logger.info("cities.getTotalElements() : "+cities.getTotalElements());
+		logger.info("cities.getTotalPages() : "+cities.getTotalPages());
+		logger.info("cities.getPageable() : "+cities.getPageable());
+		logger.info("\n\n==============================================");
+		logger.info("cities.hasNext() : "+cities.hasNext());
+		logger.info("cities.hasPrevious() : "+cities.hasPrevious());
+		logger.info("cities.hasContent() : "+cities.hasContent());
+		logger.info("cities.isFirst() : "+cities.isFirst());
+		logger.info("cities.isLast() : "+cities.isLast());
+		logger.info("cities.nextPageable() : "+cities.nextPageable());
+		logger.info("cities.previousPageable() : "+cities.previousPageable());
+		logger.info("\n\n==============================================");
+		logger.info("cities.getPageable().isPaged() : "+cities.getPageable().isPaged());
+		logger.info("cities.getPageable().isUnpaged() : "+cities.getPageable().isUnpaged());
+		logger.info("cities.getPageable().first() : "+cities.getPageable().first());
+		logger.info("cities.getPageable().getSort() : "+cities.getPageable().getSort());
+		logger.info("cities.getPageable().getOffset() : "+cities.getPageable().getOffset());
+		logger.info("cities.getPageable().getPageNumber() : "+cities.getPageable().getPageNumber());
+		logger.info("cities.getPageable().getPageSize() : "+cities.getPageable().getPageSize());
+		logger.info("cities.getPageable().hasPrevious() : "+cities.getPageable().hasPrevious());
+		logger.info("cities.getPageable().next() : "+cities.getPageable().next());
 		model.addAttribute("cities", cities);
 		model.addAttribute("param", param);
 		return "list";
 	}
 	
+	@GetMapping("/listToJson")
+	public String listToJson() {
+		return "listToJson";
+	}
+	
 	//return json
 	@PostMapping("/api/listToJson")
-	public ResponseEntity<Page<City>> persons(Pageable pageable, PagedResourcesAssembler assembler) {
+	public ResponseEntity<Page<City>> listToJson(@RequestParam Map<String, Object> param, 
+			@PageableDefault(value=4,sort= {"id"}, size=5, direction=Direction.DESC) Pageable pageable) {
 
 		Page<City> persons = cityRepository.findAll(pageable);
 		return ResponseEntity.ok(persons);
@@ -110,9 +143,9 @@ public class SampleWebController {
 	
 	@GetMapping("/detail")
 	public String detail(@RequestParam Map<String, Object> param, Model model) {
-		City city = cityRepository.findById(Long.parseLong(param.get("cityId").toString()));
+		Optional<City> city = cityRepository.findById(Long.parseLong(param.get("cityId").toString()));
 		
-		model.addAttribute("city", city);
+		model.addAttribute("city", city.get());
 		return "detail";
 	}
 	
