@@ -41,6 +41,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.onetwocm.application.data.jpa.domain.City;
@@ -203,6 +204,12 @@ public class SampleWebController {
 		cityRepository.save(city);
 		model.addAttribute("city", city);		
 		return "list";
+	}
+	
+	@PostMapping("/api/saveCity")
+	public ResponseEntity<City> saveCityApi(@RequestBody City city, Model model) {
+		City res = cityRepository.save(city);
+		return ResponseEntity.ok(res);
 	}
 	
 	@PostMapping("/saveMember")

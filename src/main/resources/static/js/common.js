@@ -206,12 +206,14 @@ function replaceValiString(type, val){
 }
 
 $(document).ready(function(){
+    /*
     $('.datepicker').datepicker({
         format: 'yyyy-mm-dd',
         autoclose: true,
         clearBtn: true,
         showOn: 'both',
     });
+    */
 /*
     $('.timepicker').flatpickr({
         enableTime: true,

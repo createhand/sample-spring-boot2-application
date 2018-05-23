@@ -6,39 +6,276 @@
 	<div th:replace="fragments/layout :: menu-sidebar"></div>
 	<div class="container">
 			<h1>list sample page</h1>
-			<div id="app-7">
-			<ol>
-				<!-- 
-				이제 각 todo-item 에 todo 객체를 제공합니다.
-				화면에 나오므로, 각 항목의 컨텐츠는 동적으로 바뀔 수 있습니다. 
-				또한 각 구성 요소에 "키"를 제공해야합니다 (나중에 설명 됨).
-				-->
-				<todo-item
-				v-for="item in groceryList"
-				v-bind:qudo="item"
-				v-bind:key="item.name">
-				</todo-item>
-			</ol>
+			<div class="content-wrapper" id="accountListContent">
+				<section class="content-header">
+					<h1>
+						계정 관리
+						<small>관리자 계정을 관리합니다.</small>
+					</h1>
+					<ol class="breadcrumb">
+						<li><a href="/dashboard"><i class="fa fa-home"></i> Home</a></li>
+						<li class="active"><a href="/accounts/list">계정 관리</a></li>
+					</ol>
+				</section>
+
+				<!-- Main content -->
+				<section class="content">
+
+					<div class="box">
+						<div class="box-header">
+							<h3 class="box-title">관리자 계정 목록</h3>
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body">
+							<div id="admin_list_tb_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+								<div class="row">
+									<div class="col-sm-12">
+										<table id="admin-list" class="table table-bordered table-striped text-center table-list hide">
+											<colgroup>
+												<col width="50px"/>
+												<col width="100px"/>
+												<col width="250px"/>
+												<col />
+												<col width="100px"/>
+												<col width="140px"/>
+											</colgroup>
+											<thead>
+											<tr>
+												<th>No</th>
+												<th>관리자 유형</th>
+												<th>ID</th>
+												<th>이름</th>
+												<th>계정 상태</th>
+												<th>등록일시</th>
+											</tr>
+											</thead>
+											<tbody v-if="accounts.length > 0">
+											<tr v-for="(account, index) in accounts">
+												<td>{{total_count - (currentPage-1)*pageSize - index}}</td>
+												<td v-if="account.country === 'A'">총괄관리자</td><td v-else>운영관리자</td>
+												<td><a :href="infoUrl + account.id">{{ account.id }}</a></td>
+												<td>
+													{{ pageSize }}<br/>
+													{{ currentPage }}<br/>
+													{{ account.id }}<br/>
+													{{ account.name }}<br/>
+												</td>
+												<td v-if="account.activated" class="text-green">활성</td><td v-else class="text-red">비활성</td>
+												<td>{{ account.regDate }}</td>
+											</tr>
+											</tbody>
+											<tbody v-else>
+											<tr>
+												<td colspan="6" class="height-50px">등록된 계정이 없습니다.</td>
+											</tr>
+											</tbody>
+										</table>
+										<div class="row">
+											<div class="col-sm-12 text-center">
+												<b-pagination size="md" :total-rows="total_count" v-model="currentPage" :per-page="pageSize" :limit="pagenationSize"/>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /.box-body -->
+					</div>
+					<!-- /.box -->
+
+					<div class="height-50px">
+						<button id="registerBt" v-on:click="goRegister" type="button" class="btn btn-primary pull-right w-100px"><i class="glyphicon glyphicon-import"></i> 계정 등록</button>
+					</div>
+				</section>
+				<!-- /.content -->
+
+
+				<div class="modal modal-primary" id="registAdminDiv">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title">관리자 등록</h4>
+							</div>
+							<div class="modal-body">
+								<table class="table table-bordered cont-left">
+									<colgroup>
+										<col width="100px">
+										<col >
+									</colgroup>
+									<tbody>
+									<tr>
+										<th>name</th>
+										<td>
+											<input type="text" class="form-control" id="name" maxlength="20" v-model="admin.name">
+											<span class="validation-text" v-show="!adminValidation.name" style="display: block">관리자 이름를 입력해주세요.</span>
+										</td>
+									</tr>
+									<tr>
+										<th>country</th>
+										<td>
+											<select name="country" id="country" class="form-control" v-model="admin.country">
+												<option value="A">운영 관리자</option>
+												<option value="M">총괄 관리자</option>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<th>map</th>
+										<td>
+											<input type="text" class="form-control" id="map" maxlength="20" v-model="admin.map">
+											<span class="validation-text" v-show="!adminValidation.map" style="display: block">비밀번호를 입력해주세요.</span>
+										</td>
+									</tr>
+									<tr>
+										<th>state</th>
+										<td>
+											<input type="text" class="form-control" id="state" maxlength="20" v-model="admin.state">
+											<span class="validation-text" v-show="!adminValidation.state" style="display: block">비밀번호 확인을 입력해주세요.</span>
+										</td>
+									</tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+								<button type="button" class="btn btn-outline btn-banner" id="registAdminBt" v-on:click="registerAdmin">관리자 등록</button>
+							</div>
+						</div>
+						<!-- /.modal-content -->
+					</div>
+					<!-- /.modal-dialog -->
+				</div>
+				<!-- /.modal -->
 			</div>			  
 	</div>
+
 	<div th:replace="fragments/layout :: footer"/>
 <script>
-Vue.component('todo-item', {
-  props: ['qudo'],
-  text : 'i do not know',
-  template: '<li>{{ qudo.text }}</li>'
-})
+var pageNum = 1;
+var onLoad = true;
+var hashVals = document.location.hash.split('#');
 
-var app7 = new Vue({
-  el: '#app-7',
-  data: {
-    groceryList: [
-      { id: 0, text: 'Vegetables', name: '야채' },
-      { id: 1, text: 'Cheese', name : '치즈' },
-      { id: 2, text: 'Whatever else humans are supposed to eat', name : '먹을수있는것' }
-    ]
-  }
-})
+var app = new Vue({
+		name: 'AccountList',
+		el: '#accountListContent',
+		data: {
+				total_count: 0,
+				currentPage: 1,
+				pageSize: 10,
+				pagenationSize: 5,
+				accounts: [],
+				admin: {
+						id: '',
+						name: '',
+						country: 'A',
+						map: '',
+						state: '',
+						activated: true,
+						authorities: []
+				},
+				submitted: false
+		},
+		computed: {
+				infoUrl: function getInfoUrl() {
+						return '/accounts/info/';
+				},
+				adminValidation: function() {
+						return {
+								name: this.showValiText(!!this.admin.name.trim()),
+								map: this.showValiText(!!this.admin.map.trim()),
+								state: this.showValiText(!!this.admin.state.trim())
+						};
+				},
+		},
+		watch: {
+				currentPage: function currentPage() {
+						if(!onLoad){
+								this.getAccountList();
+						}
+				},
+		},
+		methods: {
+				goRegister: function() {
+						this.resetAdminInfo();
+						$('#registAdminDiv').show();
+				},
+				getAccountList: function() {
+						axios({
+								method: 'post',
+								url: '/api/listToJson',
+								params: {
+										page: this.currentPage - 1,
+										size: this.pageSize
+								}
+						}).then(function(response){
+								app.total_count = response.data.totalElements;
+								app.accounts = response.data.content;
+
+								if(onLoad){
+										app.currentPage = pageNum;
+										onLoad = false;
+								}
+						}).catch(function(error){
+								checkError(error);
+						});
+				},
+				checkKey: function(event){
+						if(event.keyCode == 13){
+								this.getAccountList();
+						}
+				},
+				resetAdminInfo: function(){
+						this.admin = {
+								id: '',
+								name: '',
+								country: 'A',
+								map: '',
+								state: '',
+								activated: true,
+								authorities: []
+						}
+				},
+				registerAdmin: function(){
+						this.submitted = true;
+
+						if (this.isValid(this.adminValidation)) {
+								axios({
+										method: 'post',
+										url: '/api/saveCity',
+										data: this.admin
+								}).then(function(value){
+										if(value.status == 200){
+												showAlert('관리자','관리자가 등록되었습니다.');
+												$('#registAdminDiv').hide();
+												app.getAccountList();
+										}
+								}).catch(function(reason){
+										checkError(reason);
+								});
+						}
+				},
+				isValid: function(validationFunc) {
+						const validation = validationFunc;
+						return Object.keys(validation).every(function(key) {
+								return validation[key];
+						})
+				},
+				showValiText: function(valid) {
+						if (this.submitted) {
+								return valid;
+						}
+						return true;
+				},
+		},
+		mounted: function() {
+
+				this.getAccountList();
+
+				$('#admin-list').removeClass('hide');
+		}
+});
 
 </script>
 </body>
